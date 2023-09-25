@@ -8,15 +8,15 @@ jobs:
       - checkout
       - run:
           command: |
-            chmod a+x ./build_portaudio_macos_intel.sh
-            ./build_portaudio_macos_intel.sh
+            chmod a+x ./build_fdk_aac_macos_intel.sh
+            ./build_fdk_aac_macos_intel.sh
           environment:
             ARTIFACT_NAME:
-              portaudio_macos_intel
+              fdk_aac_macos_intel
       - persist_to_workspace:
           root: ~/project/
           paths:
-            - workspace/portaudio_macos_intel
+            - workspace/fdk_aac_macos_intel
 
   build_linux:
     docker:
@@ -27,15 +27,15 @@ jobs:
       - run: apt-get install -y curl gcc git make g++ bzip2
       - run:
           command:  |
-            chmod a+x ./build_portaudio_linux.sh
-            ./build_portaudio_linux.sh
+            chmod a+x ./build_fdk_aac_linux.sh
+            ./build_fdk_aac_linux.sh
           environment:
             ARTIFACT_NAME:
-              portaudio_linux
+              fdk_aac_linux
       - persist_to_workspace:
           root: ~/project/
           paths:
-            - workspace/portaudio_linux
+            - workspace/fdk_aac_linux
 
   publish: 
     docker:
