@@ -7,10 +7,21 @@ workflows:
     jobs:
       - elixir/precompile_for_macos_intel:
           package-name: fdk-aac
+          filters:
+            tags: 
+              only: /v.*/
       - elixir/precompile_for_linux:
           package-name: fdk-aac
+          filters:
+            tags: 
+              only: /v.*/
       - elixir/publish_precompiled:
-          version: version2
           requires:
             - elixir/precompile_for_macos_intel
             - elixir/precompile_for_linux
+          version: << pipeline.git.tag >>
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v.*/
