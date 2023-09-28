@@ -1,22 +1,20 @@
 version: 2.1
 orbs:
-  elixir: membraneframework/elixir@dev:2722881d216ecbb4e2e884a5f4e8056cb4e51e0c
+  elixir: membraneframework/elixir@dev:57237a08c90fa5cf079f41fb5ff7c7ab1ed7c6b1
 
 workflows:
   precompile:
     jobs:
-      - elixir/precompile_for_macos_intel:
+      - elixir/precompile_for_macos_intel: &parameters
           package-name: fdk-aac
           expected-version: << pipeline.git.tag >> 
           filters:
             tags: 
               only: /v.*/
+      - elixir/precompile_for_macos_m1:
+          <<: *parameters     
       - elixir/precompile_for_linux:
-          package-name: fdk-aac
-          expected-version: << pipeline.git.tag >>
-          filters:
-            tags: 
-              only: /v.*/
+          <<: *parameters
       - elixir/publish_precompiled:
           requires:
             - elixir/precompile_for_macos_intel
