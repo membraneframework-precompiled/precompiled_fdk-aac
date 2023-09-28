@@ -5,16 +5,24 @@ orbs:
 workflows:
   precompile:
     jobs:
-      - elixir/precompile_for_macos_intel: &parameters
+      - elixir/precompile_for_macos_intel:
           package-name: fdk-aac
           expected-version: << pipeline.git.tag >> 
           filters:
             tags: 
               only: /v.*/
       - elixir/precompile_for_macos_m1:
-          <<: *parameters     
+          package-name: fdk-aac
+          expected-version: << pipeline.git.tag >> 
+          filters:
+            tags: 
+              only: /v.*/  
       - elixir/precompile_for_linux:
-          <<: *parameters
+          package-name: fdk-aac
+          expected-version: << pipeline.git.tag >> 
+          filters:
+            tags: 
+              only: /v.*/
       - elixir/publish_precompiled:
           requires:
             - elixir/precompile_for_macos_intel
